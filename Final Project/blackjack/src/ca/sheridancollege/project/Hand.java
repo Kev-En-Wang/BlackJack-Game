@@ -4,12 +4,19 @@
  */
 
 package ca.sheridancollege.project;
-
+import java.util.ArrayList;
 /**
  *SYST 17796
  *
  * @author Kevin (Zheng Yi) Wang
  */
 public class Hand extends GroupOfCards{
+    
+    public ArrayList<Card> handCards = new ArrayList();
+    
+    public Hand(){
+        super(2);
+        
+    }
 
 }

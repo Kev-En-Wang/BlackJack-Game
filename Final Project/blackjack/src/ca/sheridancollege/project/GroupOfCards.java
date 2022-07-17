@@ -15,14 +15,30 @@ import java.util.Collections;
  * @author dancye
  * @author Paul Bonenfant Jan 2020
  */
-public class GroupOfCards {
-
+public class GroupOfCards{
+    
+    enum Suit{
+        CLOVERS, SPADES, HEARTS, DIAMONDS
+    }
+    enum Value{
+        ACE, KING, QUEEN, JACK, TEN, NINE, EIGHT, SEVEN, SIX, FIVE, FOUR, THREE, TWO
+    }
+    
     //The group of cards, stored in an ArrayList
-    private ArrayList<Card> cards;
+    private ArrayList<Card> cards = new ArrayList();
     private int size;//the size of the grouping
 
     public GroupOfCards(int size) {
         this.size = size;
+        for (int n=0; n<4; n++){
+            for(int i=0; i<13; i++){
+                String suit=Suit.values()[n].name();
+                String value=Value.values()[i].name();
+                Card newCard = new CardMaker(suit,value);
+                cards.add(newCard);
+                //System.out.println(newCard.toString());
+            }
+        }
     }
 
     /**
@@ -33,7 +49,7 @@ public class GroupOfCards {
     public ArrayList<Card> getCards() {
         return cards;
     }
-
+    
     public void shuffle() {
         Collections.shuffle(cards);
     }
@@ -50,6 +66,11 @@ public class GroupOfCards {
      */
     public void setSize(int size) {
         this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        return null;
     }
 
 }//end class

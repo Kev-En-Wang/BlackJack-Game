@@ -8,12 +8,25 @@ package ca.sheridancollege.project;
 /**
  * A class to be used as the base Card class for the project. Must be general enough to be instantiated for any Card
  * game. Students wishing to add to the code should remember to add themselves as a modifier.
- *
+ * @author Kevin Wang 2022
  * @author dancye
  */
 public abstract class Card {
+    protected String suit;
+    protected String value;
+    
+    public Card(String suit, String value){
+        this.suit=suit;
+        this.value=value;
+    }
+    public String getSuit(){
+        return suit;
+    }
+    
+    public String getValue(){
+        return value;
+    }
     //default modifier for child classes
-
     /**
      * Students should implement this method for their specific children classes
      *
@@ -21,5 +34,4 @@ public abstract class Card {
      */
     @Override
     public abstract String toString();
-
 }

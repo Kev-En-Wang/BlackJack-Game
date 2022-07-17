@@ -10,15 +10,20 @@ package ca.sheridancollege.project;
  *
  * @author Kevin (Zheng Yi) Wang
  */
-public class Dealer extends Player{
+public class BlackJack extends Game {
     
-    public Dealer(){
-        super("Dealer");
+    public BlackJack(){
+        super("Blackjack");
     }
     
     @Override
     public void play() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public void declareWinner() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

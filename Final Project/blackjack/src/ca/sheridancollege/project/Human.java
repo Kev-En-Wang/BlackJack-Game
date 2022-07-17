@@ -10,6 +10,15 @@ package ca.sheridancollege.project;
  *
  * @author Kevin (Zheng Yi) Wang
  */
-public class Client extends Player{
+public class Human extends Player{
+    public Human(String name){
+        super(name);
+        
+    }
+
+    @Override
+    public void play() {
+        
+    }
 
 }
