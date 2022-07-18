@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 
 public class Deck extends GroupOfCards{
+    
     //Deck constructor
     public Deck(){
         super(52);

@@ -18,7 +18,7 @@ public class CardMaker extends Card{
         this.value=value;
     }
     
-    
+    //Returns the card with Value of Suit ex: TEN of CLOVERS
     @Override
     public String toString() {
         return value +" of "+ suit;

@@ -14,6 +14,7 @@ import java.util.Collections;
  *
  * @author dancye
  * @author Paul Bonenfant Jan 2020
+ * @author Kevin Wang 2022
  */
 public class GroupOfCards{
     
@@ -30,6 +31,8 @@ public class GroupOfCards{
 
     public GroupOfCards(int size) {
         this.size = size;
+        
+        //This makes a deck of 52 unique cards
         for (int n=0; n<4; n++){
             for(int i=0; i<13; i++){
                 String suit=Suit.values()[n].name();

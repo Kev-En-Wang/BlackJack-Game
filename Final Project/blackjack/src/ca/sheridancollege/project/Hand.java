@@ -14,9 +14,12 @@ public class Hand extends GroupOfCards{
     
     public ArrayList<Card> handCards = new ArrayList();
     
-    public Hand(){
-        super(2);
-        
+    public Hand(int n){
+        super(n);
+    }
+    
+    public void showHand(){
+    
     }
 
 }

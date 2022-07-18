@@ -4,7 +4,8 @@
  */
 
 package ca.sheridancollege.project;
-
+import java.util.ArrayList;
+import java.util.Scanner;
 /**
  *SYST 17796
  *
@@ -12,9 +13,27 @@ package ca.sheridancollege.project;
  */
 public class main {
     public static void main(String[] args){
+        
+        Scanner userIn = new Scanner(System.in);
+        
         GroupOfCards deck = new Deck();
-        Card newCard = new CardMaker("CLOVERS","KING");
-        System.out.println(newCard.toString());
-    
+        System.out.println(deck.getCards());
+        
+        BlackJack newGame = new BlackJack();
+        newGame.register();
+        for(int n=0; n<newGame.getPlayers().size(); n++){
+            System.out.println("Player " +n+ " is "+newGame.getPlayers().get(n).getName());
+        }
+        
+        boolean keepPlaying=true;
+        while(keepPlaying){
+            //At the end of every hand, this prompt comes up to quit
+            System.out.println("Would you like to keep playing?");
+            System.out.println("Y/N");
+            String answer = "N";
+            if (answer.equals("N")){
+                System.exit(1);
+            }
+        }
     }
 }
