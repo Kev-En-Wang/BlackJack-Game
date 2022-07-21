@@ -18,10 +18,13 @@ public class Dealer extends Player{
     
     @Override
     public void play(int ok) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
     
-    @Override public void bet(){
+    @Override 
+    public boolean bet(){
+    
+        return false;
     
     }
     

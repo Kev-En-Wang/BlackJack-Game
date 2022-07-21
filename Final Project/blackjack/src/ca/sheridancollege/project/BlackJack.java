@@ -18,16 +18,16 @@ public class BlackJack extends Game {
     
     //All static arraylists are made for the player class to reference
     //An array list for each player's hand when they play
-    public static ArrayList<Hand> handList = new ArrayList();
+    public static ArrayList<Integer> handList = new ArrayList();
     
     //An array list for each player's bet
     public static ArrayList<Integer> potList = new ArrayList();
     
     //An array list for the winners
-    private ArrayList<Player> winList = new ArrayList();
+    public static ArrayList<String> winList = new ArrayList();
     
     //An array list for the eliminated
-    private ArrayList<Player> deadList = new ArrayList();
+    private ArrayList<String> deadList = new ArrayList();
     
     
     public BlackJack(){
@@ -120,24 +120,41 @@ public class BlackJack extends Game {
         deadList.removeAll(deadList);
     }
     
-    private boolean keepPlaying(){
-        Scanner input = new Scanner(System.in);
-        return !input.nextLine().equals("N");
-    }
-    
+    //This checks if the player is out at the end of the round. If he is, then it unregisters them
     public void declareDead(){
         
-        //Going through every player
+        //Going through every player and checks whether or not they have no money
+        //If they don't have money, their name is added to the deadList and they get unregistered
         for (int n=0; n<(players.size());n++){
-            
             if(players.get(n).getBankInt()<-1){
-                
+                deadList.add(players.get(n).getName());
+                players.remove(n);
+            }
+        }
+        //Declares that no-one is eliminated, or the people that are eliminated
+        if (deadList.isEmpty()){
+            System.out.println("No-one got eliminated.");
+        }
+        else{
+            System.out.println("The following people were eliminated:");
+            for(int n=0; n<deadList.size(); n++){
+                System.out.println(deadList.get(n));
             }
         }
     }
     
     @Override
     public void declareWinner() {
+        if(winList.isEmpty()){
+            System.out.println("No-one won.");
+        }
+        else{
+            System.out.println("Let's take a moment to congralate:");
+            for (int n=0; n<winList.size(); n++){
+                System.out.println(winList.get(n));
+            }
+        }
+            
         
     }
     
@@ -146,9 +163,13 @@ public class BlackJack extends Game {
     public void play() {
         //If this is true, then the game keeps going
         boolean startGame = true;
-        //makes a new deck
+        
+        //Makes a new deck
         GroupOfCards mainDeck= new Deck();
+        
+        //Creates a new dealer
         Dealer dealer = new Dealer();
+        
         //registers players
         register();
         
@@ -156,18 +177,32 @@ public class BlackJack extends Game {
         while (startGame){
             
             initialize();
+            
+            GroupOfCards.shuffle();
+            
+            
+            //This goes through every player's turn to place a bet and then deals the dealer's hand
+            for (int n=0; n<(players.size());n++){
+                while(true){
+                    players.get(n).bet();
+                    break;
+                }
+                //Dealer gets dealt and shows his hand here
+            }
+            
             //This goes through every player's turn
             for (int n=0; n<(players.size());n++){
                 while(true){
-                    try{
-                        players.get(n).play(n);
-                        break;
-                    }
-                    catch(Exception a){
-                        System.out.println("Invalid input, please try again poop.");
-                    }
+                    players.get(n).play(n);
+                    break;
                 }
+                //Dealer gets dealt and shows his hand here
             }
+            
+            dealer.play(1);
+            
+            declareWinner();
+            declareDead();
             startGame=false;
             
         }

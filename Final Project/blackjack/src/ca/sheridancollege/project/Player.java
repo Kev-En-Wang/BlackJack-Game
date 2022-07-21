@@ -41,7 +41,7 @@ public abstract class Player {
         this.name = name;
     }
     
-    public abstract void bet();
+    public abstract boolean bet();
     
     
     /**

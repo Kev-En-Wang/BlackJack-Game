@@ -4,6 +4,7 @@
  */
 
 package ca.sheridancollege.project;
+import static java.lang.System.in;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -57,7 +58,7 @@ public class Human extends Player{
         return status;
     }
     
-    public void setBet(int n){
+    private void setBet(int n){
         myBet=n;
     }
     
@@ -66,8 +67,20 @@ public class Human extends Player{
         
     }
     
-    public void bet(){
-    
+    @Override
+    public boolean bet(){
+        
+        if(funds<bet){
+            System.out.println("You don't have the funds.");
+            return false;
+        }
+        else{
+            setBet(bet);
+            subFunds(bet);
+            BlackJack.potList.add(bet);
+            System.out.println("Your bet has been placed");
+            return true;
+        }
     }
     
     public void stay(){
