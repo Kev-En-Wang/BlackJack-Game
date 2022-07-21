@@ -10,6 +10,7 @@ package ca.sheridancollege.project;
  *
  * @author dancye
  * @author Paul Bonenfant Jan 2020
+ * @modified by Kevin Wang 2022
  */
 public abstract class Player {
 
@@ -30,7 +31,7 @@ public abstract class Player {
     public String getName() {
         return name;
     }
-
+    
     /**
      * Ensure that the playerID is unique
      *
@@ -40,10 +41,14 @@ public abstract class Player {
         this.name = name;
     }
     
+    public abstract void bet();
+    
+    
     /**
      * The method to be overridden when you subclass the Player class with your specific type of Player and filled in
      * with logic to play your game.
+     * @param playerNum
      */
-    public abstract void play();
+    public abstract void play(int playerNum);
 
 }

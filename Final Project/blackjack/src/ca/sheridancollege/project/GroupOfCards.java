@@ -26,22 +26,22 @@ public class GroupOfCards{
     }
     
     //The group of cards, stored in an ArrayList
-    private ArrayList<Card> cards = new ArrayList();
+    protected static ArrayList<Card> cards = new ArrayList();
     private int size;//the size of the grouping
 
     public GroupOfCards(int size) {
         this.size = size;
         
-        //This makes a deck of 52 unique cards
-        for (int n=0; n<4; n++){
-            for(int i=0; i<13; i++){
-                String suit=Suit.values()[n].name();
-                String value=Value.values()[i].name();
-                Card newCard = new CardMaker(suit,value);
-                cards.add(newCard);
-                //System.out.println(newCard.toString());
+        //This makes a new deck
+        for (int i=0; i<4;i++){
+            for(int n=0; n<13; n++){
+                    String suit=Suit.values()[i].name();
+                    String value=Value.values()[n].name();
+                    Card newCard = new CardMaker(suit,value);
+                    cards.add(newCard);
             }
         }
+        
     }
 
     /**
@@ -52,8 +52,8 @@ public class GroupOfCards{
     public ArrayList<Card> getCards() {
         return cards;
     }
-    
-    public void shuffle() {
+
+    public static void shuffle() {
         Collections.shuffle(cards);
     }
 

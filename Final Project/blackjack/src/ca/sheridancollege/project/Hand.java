@@ -10,16 +10,19 @@ import java.util.ArrayList;
  *
  * @author Kevin (Zheng Yi) Wang
  */
-public class Hand extends GroupOfCards{
+public class Hand extends Deck{
     
     public ArrayList<Card> handCards = new ArrayList();
     
-    public Hand(int n){
-        super(n);
+    public Hand(){
+        
     }
     
+    //shows the hand
     public void showHand(){
-    
+        for(int i=0; i<handCards.size();i++){
+            
+        }
     }
 
 }

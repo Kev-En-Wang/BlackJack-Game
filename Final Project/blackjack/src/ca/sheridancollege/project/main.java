@@ -16,11 +16,9 @@ public class main {
         
         Scanner userIn = new Scanner(System.in);
         
-        GroupOfCards deck = new Deck();
-        System.out.println(deck.getCards());
-        
         BlackJack newGame = new BlackJack();
-        newGame.register();
+        newGame.play();
+        /*
         for(int n=0; n<newGame.getPlayers().size(); n++){
             System.out.println("Player " +n+ " is "+newGame.getPlayers().get(n).getName());
         }
@@ -35,5 +33,7 @@ public class main {
                 System.exit(1);
             }
         }
+        userIn.close();
+        */
     }
 }

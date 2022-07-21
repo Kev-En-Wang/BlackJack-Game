@@ -13,12 +13,13 @@ import java.util.ArrayList;
  *
  * @author dancye
  * @author Paul Bonenfant Jan 2020
+ * @author Kevin Wang 2022
  */
 public abstract class Game {
 
     private final String name;//the title of the game
-    protected ArrayList<Player> players;// the players of the game
-
+    public static ArrayList<Human> players;// the human players of the game
+    
     public Game(String name) {
         this.name = name;
         players = new ArrayList();
@@ -34,14 +35,14 @@ public abstract class Game {
     /**
      * @return the players of this game
      */
-    public ArrayList<Player> getPlayers() {
+    public ArrayList<Human> getPlayers() {
         return players;
     }
 
     /**
      * @param players the players of this game
      */
-    public void setPlayers(ArrayList<Player> players) {
+    public void setPlayers(ArrayList<Human> players) {
         this.players = players;
     }
 
