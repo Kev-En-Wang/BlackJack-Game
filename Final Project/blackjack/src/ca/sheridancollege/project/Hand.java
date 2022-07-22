@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Hand extends Deck{
     
-    public ArrayList<Card> handCards = new ArrayList();
+    public static ArrayList<Card> handCards = new ArrayList();
     
     public Hand(){
         
@@ -21,8 +21,16 @@ public class Hand extends Deck{
     //shows the hand
     public void showHand(){
         for(int i=0; i<handCards.size();i++){
-            
+            System.out.println(handCards.get(i).toString());
         }
+    }
+    
+    public int getHandInt(){
+        int handValue;
+        for(int i=0; i<handCards.size();i++){
+            System.out.println(handCards.get(i).toString());
+        }
+        return 5;
     }
 
 }

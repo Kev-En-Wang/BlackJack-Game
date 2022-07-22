@@ -12,10 +12,8 @@ package ca.sheridancollege.project;
  * This was made just so it can make a card and add it to the group of cards class
  */
 public class CardMaker extends Card{
-    public CardMaker(String suit, String value){
-        super(suit, value);
-        this.suit= suit;
-        this.value=value;
+    public CardMaker(String suit, String value,int intValue){
+        super(suit, value, intValue);
     }
     
     //Returns the card with Value of Suit ex: TEN of CLOVERS

@@ -14,10 +14,12 @@ package ca.sheridancollege.project;
 public abstract class Card {
     protected String suit;
     protected String value;
+    protected int intValue;
     
-    public Card(String suit, String value){
+    public Card(String suit, String value, int intValue){
         this.suit=suit;
         this.value=value;
+        this.intValue=intValue;
     }
     public String getSuit(){
         return suit;
@@ -25,6 +27,10 @@ public abstract class Card {
     
     public String getValue(){
         return value;
+    }
+    
+    public int getIntValue(){
+        return intValue;
     }
     //default modifier for child classes
     /**

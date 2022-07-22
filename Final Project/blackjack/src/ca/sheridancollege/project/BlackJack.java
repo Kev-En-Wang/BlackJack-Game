@@ -112,12 +112,13 @@ public class BlackJack extends Game {
         
     }
     
-    //This is used to start a new round. It resets all variables and 
+    //This is used to start a new round. It resets all arraylists.
     private void initialize(){
         handList.removeAll(handList);
         potList.removeAll(potList);
         winList.removeAll(winList);
         deadList.removeAll(deadList);
+        Hand.handCards.removeAll(Hand.handCards);
     }
     
     //This checks if the player is out at the end of the round. If he is, then it unregisters them
@@ -178,7 +179,7 @@ public class BlackJack extends Game {
             
             initialize();
             
-            GroupOfCards.shuffle();
+            //GroupOfCards.shuffle();
             
             
             //This goes through every player's turn to place a bet and then deals the dealer's hand

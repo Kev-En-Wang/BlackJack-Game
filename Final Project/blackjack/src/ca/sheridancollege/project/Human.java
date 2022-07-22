@@ -46,11 +46,11 @@ public class Human extends Player{
     }
     
     public void addFunds(int add){
-        funds =+add;
+        funds +=add;
     }
     
     public void subFunds(int sub){
-        funds=- sub;
+        funds-=sub;
     }
     
     public String getStatus(){
@@ -69,7 +69,10 @@ public class Human extends Player{
     
     @Override
     public boolean bet(){
-        
+        Scanner input = new Scanner(System.in);
+        System.out.println(super.getName()+" how much would you like to bet?");
+        int bet = input.nextInt();
+        System.out.println(getBankUI());
         if(funds<bet){
             System.out.println("You don't have the funds.");
             return false;
@@ -78,7 +81,7 @@ public class Human extends Player{
             setBet(bet);
             subFunds(bet);
             BlackJack.potList.add(bet);
-            System.out.println("Your bet has been placed");
+            System.out.println("Your bet has been placed"+getBankUI());
             return true;
         }
     }
@@ -106,8 +109,8 @@ public class Human extends Player{
     }
     
     //Did I bust, or can I keep going?
-    public void didIBust(){
-        
+    private boolean didIBust(){
+        return true;
     }
     
     private void userPrompt(){
@@ -126,23 +129,36 @@ public class Human extends Player{
         System.out.println(getStatus());
         userPrompt();
         
-        Scanner input = new Scanner(System.in);
 
+        //Testing
+        for (int n=0; n<13; n++){
+            System.out.print(GroupOfCards.cards.get(n).getValue() + " is  ");
+            System.out.println(GroupOfCards.cards.get(n).getIntValue());
+            
+        }
+        //Testing
+        Scanner input = new Scanner(System.in);
+        boolean firstTurn=true;
+        
+        
         //While it's the human player's turn
-        while(myTurn){
+        while(myTurn){    
             try{
                 int x = input.nextInt();
                 switch (x){
                     case 1:
                         hit();
-                        didIBust();
+                        if(didIBust()){
+                            
+                        }
+                        firstTurn=false;
                         break;
                     case 2:
                         stay();
                         myTurn = false;
                         break;
                     case 3:
-                        if(doubleDown(playerNum)){
+                        if(doubleDown(playerNum)&&firstTurn){
                             System.out.println("You double downed");
                             myTurn = false;
                         }

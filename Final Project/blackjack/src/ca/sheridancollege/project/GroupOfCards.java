@@ -22,7 +22,7 @@ public class GroupOfCards{
         CLOVERS, SPADES, HEARTS, DIAMONDS
     }
     enum Value{
-        ACE, KING, QUEEN, JACK, TEN, NINE, EIGHT, SEVEN, SIX, FIVE, FOUR, THREE, TWO
+        TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE
     }
     
     //The group of cards, stored in an ArrayList
@@ -34,12 +34,27 @@ public class GroupOfCards{
         
         //This makes a new deck
         for (int i=0; i<4;i++){
-            for(int n=0; n<13; n++){
+            
+            //This adds all the numbers up to 10
+            for(int n=0; n<9; n++){
                     String suit=Suit.values()[i].name();
                     String value=Value.values()[n].name();
-                    Card newCard = new CardMaker(suit,value);
+                    Card newCard = new CardMaker(suit,value,n+2);
                     cards.add(newCard);
             }
+            
+            //This adds all the face cards
+            for(int n=0; n<3; n++){
+                    String suit=Suit.values()[i].name();
+                    String value=Value.values()[n+9].name();
+                    Card newCard = new CardMaker(suit,value,10);
+                    cards.add(newCard);
+            }
+            
+            //This adds the ace card seperately
+            Card newCard = new CardMaker(Suit.values()[i].name(),"ACES",11);
+            cards.add(newCard);
+            
         }
         
     }
