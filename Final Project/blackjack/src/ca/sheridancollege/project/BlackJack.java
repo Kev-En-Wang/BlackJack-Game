@@ -179,7 +179,7 @@ public class BlackJack extends Game {
             
             initialize();
             
-            //GroupOfCards.shuffle();
+            GroupOfCards.shuffle();
             
             
             //This goes through every player's turn to place a bet and then deals the dealer's hand

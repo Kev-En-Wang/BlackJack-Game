@@ -87,7 +87,7 @@ public class Human extends Player{
     }
     
     public void stay(){
-    
+        BlackJack.handList.add(myHand.getHandInt());
     }
     
     //This requires the player and the index of the player in the player list
@@ -110,15 +110,24 @@ public class Human extends Player{
     
     //Did I bust, or can I keep going?
     private boolean didIBust(){
-        return true;
+        return false;
     }
     
-    private void userPrompt(){
-        System.out.println("What would you like to do?");
-        System.out.println("1 to Hit");
-        System.out.println("2 to Stay");
-        System.out.println("3 to Double Down");
-        System.out.println("4 to Check Status");
+    private void userPrompt(boolean firstTurn){
+        if(firstTurn){
+            System.out.println("What would you like to do?");
+            System.out.println("1 to Hit");
+            System.out.println("2 to Stay");
+            System.out.println("3 to Check Status");
+            System.out.println("4 to Double Down");
+            System.out.println("5 to Get Insurance");
+        }
+        else{
+            System.out.println("What would you like to do?");
+            System.out.println("1 to Hit");
+            System.out.println("2 to Stay");
+        }
+        
     }
     
     @Override
@@ -127,7 +136,7 @@ public class Human extends Player{
         
         //User prompt
         System.out.println(getStatus());
-        userPrompt();
+        
         
 
         //Testing
@@ -140,24 +149,35 @@ public class Human extends Player{
         Scanner input = new Scanner(System.in);
         boolean firstTurn=true;
         
-        
         //While it's the human player's turn
-        while(myTurn){    
+        while(myTurn){
+            userPrompt(firstTurn);
             try{
                 int x = input.nextInt();
                 switch (x){
                     case 1:
                         hit();
+                        
+                        //If the player busts then their hand value becomes negative 1
                         if(didIBust()){
-                            
+                            BlackJack.handList.add(-1);
+                            myTurn=false;
                         }
-                        firstTurn=false;
+                        else{
+                            firstTurn=false;
+                        }
+                        
                         break;
                     case 2:
                         stay();
                         myTurn = false;
                         break;
+                    
                     case 3:
+                        System.out.println(getStatus());
+                        break;
+                    
+                    case 4:
                         if(doubleDown(playerNum)&&firstTurn){
                             System.out.println("You double downed");
                             myTurn = false;
@@ -166,9 +186,8 @@ public class Human extends Player{
                             System.out.println("Not enough funds to double down.");
                         }
                         break;
-                    case 4:
-                        System.out.println(getStatus());
-                        break;
+                    case 5:
+                        System.out.println("Insurance goes here.");
                     default:
                         System.out.println("That's not a choice.");
                 }
