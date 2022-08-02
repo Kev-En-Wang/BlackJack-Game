@@ -155,6 +155,8 @@ public class Human extends Player{
             try{
                 int x = input.nextInt();
                 switch (x){
+                    
+                    //HIT ME
                     case 1:
                         hit();
                         
@@ -168,15 +170,19 @@ public class Human extends Player{
                         }
                         
                         break;
+                    
+                    //I'LL STAY, THANKS
                     case 2:
                         stay();
                         myTurn = false;
                         break;
                     
+                    //HOW AM I DOIN' DOC?
                     case 3:
                         System.out.println(getStatus());
                         break;
                     
+                    //DOUBLE DOWN, LET'S GOOOOOO
                     case 4:
                         if(doubleDown(playerNum)&&firstTurn){
                             System.out.println("You double downed");
@@ -186,8 +192,12 @@ public class Human extends Player{
                             System.out.println("Not enough funds to double down.");
                         }
                         break;
+                        
+                    //BUDDY, IF THINGS LOOK BAD NOW. IT'S GONNA GET A LOT MORE HAIRY SOON
                     case 5:
                         System.out.println("Insurance goes here.");
+                    
+                    //YOU CAN'T DO THAT, BUDDY
                     default:
                         System.out.println("That's not a choice.");
                 }
