@@ -16,6 +16,9 @@ import java.util.ArrayList;
 public class Deck extends GroupOfCards{
     //This keeps track of which card the deck is dealing next
     int cardNum = 0;
+    public void cardNumReset(){
+        cardNum=0;
+    }
     
     //Deck constructor
     public Deck(){
@@ -27,10 +30,10 @@ public class Deck extends GroupOfCards{
     }
     
     //This deals cards to a hand
-    public void deal(Hand hand, int n){
+    public void dealHuman(Human player, int n){
         //This sets a hand card to the next card in the deck and adds 1 to the index
         for (int i=0; i<n; i++){
-            hand.handCards.add(cards.get(i));
+            player.handCards.add(cards.get(cardNum));
             cardNum++;
         }
     }

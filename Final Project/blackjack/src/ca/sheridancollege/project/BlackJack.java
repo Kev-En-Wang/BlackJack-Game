@@ -15,7 +15,9 @@ import java.util.Scanner;
  * @author Kevin (Zheng Yi) Wang
  */
 public class BlackJack extends Game {
-    
+    //Makes a new deck
+        Deck mainDeck= new Deck();
+        
     //All static arraylists are made for the player class to reference
     //An array list for each player's hand when they play
     public static ArrayList<Integer> handList = new ArrayList();
@@ -118,7 +120,7 @@ public class BlackJack extends Game {
         potList.removeAll(potList);
         winList.removeAll(winList);
         deadList.removeAll(deadList);
-        Hand.handCards.removeAll(Hand.handCards);
+        mainDeck.cardNumReset();
     }
     
     //This checks if the player is out at the end of the round. If he is, then it unregisters them
@@ -164,9 +166,6 @@ public class BlackJack extends Game {
     public void play() {
         //If this is true, then the game keeps going
         boolean startGame = true;
-        
-        //Makes a new deck
-        GroupOfCards mainDeck= new Deck();
         
         //Creates a new dealer
         Dealer dealer = new Dealer();

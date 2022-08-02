@@ -21,7 +21,7 @@ public class Human extends Player{
     //Amount of money the person's betting this round
     private int myBet;
     //The player's hand
-    private Hand myHand = new Hand();
+    public ArrayList<Card> handCards = new ArrayList();
     
     //Human Constructor
     public Human(String name){
@@ -87,7 +87,7 @@ public class Human extends Player{
     }
     
     public void stay(){
-        BlackJack.handList.add(myHand.getHandInt());
+        BlackJack.handList.add(getHandInt());
     }
     
     //This requires the player and the index of the player in the player list
@@ -128,6 +128,11 @@ public class Human extends Player{
             System.out.println("2 to Stay");
         }
         
+    }
+    
+    //This returns the integer value for the hand
+    private int getHandInt(){
+        return 5;
     }
     
     @Override
