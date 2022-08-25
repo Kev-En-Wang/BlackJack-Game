@@ -4,8 +4,6 @@
  */
 
 package ca.sheridancollege.project;
-import static java.lang.System.in;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -20,8 +18,6 @@ public class Human extends Player{
     private int funds;
     //Amount of money the person's betting this round
     private int myBet;
-    //The player's hand
-    public ArrayList<Card> handCards = new ArrayList();
     
     //Human Constructor
     public Human(String name){
@@ -37,8 +33,12 @@ public class Human extends Player{
      * @return Amount of funds you have
      */
     
-    public String getBankUI(){
+    private String getBankUI(){
         return "You have "+funds+" dollars in your bank.";
+    }
+    
+    private String getBetUI(){
+        return "You're betting "+myBet+ " dollars.";
     }
     
     public int getBankInt(){
@@ -53,26 +53,39 @@ public class Human extends Player{
         funds-=sub;
     }
     
-    public String getStatus(){
-        String status = "The current player is: "+ super.getName()+"\n"+getBankUI();
-        return status;
-    }
-    
-    private void setBet(int n){
+    public void setBet(int n){
         myBet=n;
     }
     
-     //This deals another card to the player
-    public void hit(){
-        
+    public int getBet(){
+        return myBet;
     }
     
-    @Override
+    //This gives the status of the current player
+    private String getStatus(){
+        String status = "The current player is: "+ super.getName()+"\n"+getBetUI();
+        return status;
+    }
+    
+    //This shows the hand of the current player
+    private String showHand(){
+        String myHand="";
+        for (int i=0; i<handCards.size(); i++){
+            myHand+=handCards.get(i).getValue()+" of "+handCards.get(i).getSuit()+"\n";
+        }
+        
+        return "Your cards are:\n" + myHand;
+    }
+    
+    
+    
+    
+    //Method for betting for each individual player
     public boolean bet(){
         Scanner input = new Scanner(System.in);
+        System.out.println(getBankUI());
         System.out.println(super.getName()+" how much would you like to bet?");
         int bet = input.nextInt();
-        System.out.println(getBankUI());
         if(funds<bet){
             System.out.println("You don't have the funds.");
             return false;
@@ -80,18 +93,14 @@ public class Human extends Player{
         else{
             setBet(bet);
             subFunds(bet);
-            BlackJack.potList.add(bet);
-            System.out.println("Your bet has been placed"+getBankUI());
+            //BlackJack.potList.add(bet);
+            System.out.println("Your bet has been placed\n"+getBankUI());
             return true;
         }
     }
     
-    public void stay(){
-        BlackJack.handList.add(getHandInt());
-    }
-    
     //This requires the player and the index of the player in the player list
-    public boolean doubleDown(int index){
+    private boolean doubleDown(int index){
         //This sets the bet to double the original
         int bet = 2*myBet;
         
@@ -103,24 +112,25 @@ public class Human extends Player{
         else{
             
             subFunds(myBet);
-            BlackJack.potList.set(index, bet);
+            //BlackJack.potList.set(index, bet);
             return true;
         }
     }
-    
-    //Did I bust, or can I keep going?
-    private boolean didIBust(){
-        return false;
-    }
+    /*
+    * The user prompt depends on which turn it's on
+    * because after the first turn it'll prompt
+    * the only valid choices
+    */
     
     private void userPrompt(boolean firstTurn){
         if(firstTurn){
+            System.out.println(Dealer.showFirstCard());
             System.out.println("What would you like to do?");
             System.out.println("1 to Hit");
             System.out.println("2 to Stay");
             System.out.println("3 to Check Status");
             System.out.println("4 to Double Down");
-            System.out.println("5 to Get Insurance");
+            //System.out.println("5 to Get Insurance");
         }
         else{
             System.out.println("What would you like to do?");
@@ -129,62 +139,58 @@ public class Human extends Player{
         }
         
     }
-    
-    //This returns the integer value for the hand
-    private int getHandInt(){
-        return 5;
-    }
-    
     @Override
     public void play(int playerNum) {
         boolean myTurn=true;
-        
+        /*
+        *Instead of making a deal function
+        *I just made it so it hits twice to start
+        */
+        hit();
+        hit();
         //User prompt
         System.out.println(getStatus());
         
-        
-
-        //Testing
-        for (int n=0; n<13; n++){
-            System.out.print(GroupOfCards.cards.get(n).getValue() + " is  ");
-            System.out.println(GroupOfCards.cards.get(n).getIntValue());
-            
-        }
-        //Testing
         Scanner input = new Scanner(System.in);
         boolean firstTurn=true;
         
         //While it's the human player's turn
         while(myTurn){
+            
+            //This prompts the user accordingly
             userPrompt(firstTurn);
+            System.out.println(showHand());
+            
+            //This is where the user puts in what he/she wants to do
             try{
                 int x = input.nextInt();
+                
+                //switch case instead of "if" statements
                 switch (x){
                     
                     //HIT ME
                     case 1:
                         hit();
-                        
-                        //If the player busts then their hand value becomes negative 1
+                        //If the player busts then their hand value becomes -1
                         if(didIBust()){
-                            BlackJack.handList.add(-1);
                             myTurn=false;
+                            System.out.println("----BUSTED----\n"+showHand()+"----BUSTED----");
                         }
                         else{
                             firstTurn=false;
                         }
-                        
                         break;
                     
                     //I'LL STAY, THANKS
                     case 2:
-                        stay();
                         myTurn = false;
                         break;
                     
-                    //HOW AM I DOIN' DOC?
+                    //HOW AM I DOIN' DOC? Status check
                     case 3:
                         System.out.println(getStatus());
+                        System.out.println(Dealer.showFirstCard());
+                        System.out.println(showHand());
                         break;
                     
                     //DOUBLE DOWN, LET'S GOOOOOO
@@ -198,7 +204,7 @@ public class Human extends Player{
                         }
                         break;
                         
-                    //BUDDY, IF THINGS LOOK BAD NOW. IT'S GONNA GET A LOT MORE HAIRY SOON
+                    //BUDDY, IF THINGS LOOK BAD NOW. IT'S GONNA GET A LOT WORSE SOON
                     case 5:
                         System.out.println("Insurance goes here.");
                     
@@ -208,11 +214,9 @@ public class Human extends Player{
                 }
             }
             catch (Exception a){
-                System.out.println("Invalid Input, try again.opoypt");
-                break;
+                System.out.println("Invalid Input, try again.");
             }
            
         }
     }
-
 }

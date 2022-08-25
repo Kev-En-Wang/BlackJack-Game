@@ -14,7 +14,8 @@ import java.util.Collections;
  *
  * @author dancye
  * @author Paul Bonenfant Jan 2020
- * @author Kevin Wang 2022
+ * @Modified by Kevin Wang 2022
+ * @modified Mhd Kartoumeh
  */
 public class GroupOfCards{
     
@@ -22,7 +23,7 @@ public class GroupOfCards{
         CLOVERS, SPADES, HEARTS, DIAMONDS
     }
     enum Value{
-        TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE
+        TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
     }
     
     //The group of cards, stored in an ArrayList
@@ -52,7 +53,7 @@ public class GroupOfCards{
             }
             
             //This adds the ace card seperately
-            Card newCard = new CardMaker(Suit.values()[i].name(),"ACES",11);
+            Card newCard = new CardMaker(Suit.values()[i].name(),"ACE",11);
             cards.add(newCard);
             
         }

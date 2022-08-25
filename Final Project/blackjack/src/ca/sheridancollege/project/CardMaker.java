@@ -6,7 +6,7 @@
 package ca.sheridancollege.project;
 
 /**
- *SYST 17796
+ * SYST 17796
  *
  * @author Kevin (Zheng Yi) Wang
  * This was made just so it can make a card and add it to the group of cards class

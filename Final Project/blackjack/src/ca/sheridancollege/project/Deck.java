@@ -5,8 +5,6 @@
 
 package ca.sheridancollege.project;
 
-import java.util.ArrayList;
-
 /**
  *SYST 17796
  *
@@ -15,26 +13,21 @@ import java.util.ArrayList;
 
 public class Deck extends GroupOfCards{
     //This keeps track of which card the deck is dealing next
-    int cardNum = 0;
-    public void cardNumReset(){
-        cardNum=0;
-    }
+    private static int cardNum = 0;
     
     //Deck constructor
     public Deck(){
         super(52);
     }
     
+    //This resets the index of the card
     public void resetCardNum(){
         cardNum=0;
     }
     
-    //This deals cards to a hand
-    public void dealHuman(Human player, int n){
-        //This sets a hand card to the next card in the deck and adds 1 to the index
-        for (int i=0; i<n; i++){
-            player.handCards.add(cards.get(cardNum));
-            cardNum++;
-        }
+    //This deals a cards to a hand
+    public static Card takeCard(){
+        cardNum++;
+        return cards.get(cardNum-1);
     }
 }

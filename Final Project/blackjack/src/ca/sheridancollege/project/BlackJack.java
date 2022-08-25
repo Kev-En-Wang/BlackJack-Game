@@ -5,28 +5,20 @@
 
 package ca.sheridancollege.project;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
 
 /**
  *SYST 17796
- *The game with all the methods of the game
+ * The main blackjack game
  * 
  * @author Kevin (Zheng Yi) Wang
  */
 public class BlackJack extends Game {
     //Makes a new deck
         Deck mainDeck= new Deck();
-        
-    //All static arraylists are made for the player class to reference
-    //An array list for each player's hand when they play
-    public static ArrayList<Integer> handList = new ArrayList();
-    
-    //An array list for each player's bet
-    public static ArrayList<Integer> potList = new ArrayList();
     
     //An array list for the winners
-    public static ArrayList<String> winList = new ArrayList();
+    private ArrayList<String> winList = new ArrayList();
     
     //An array list for the eliminated
     private ArrayList<String> deadList = new ArrayList();
@@ -38,7 +30,7 @@ public class BlackJack extends Game {
 
     //Used to register players into the game. 
     //Creates a player object and prompts user for ID
-    public void register(){
+    private void register(){
         //Number of players to register
         int numPlayers;
         
@@ -116,34 +108,108 @@ public class BlackJack extends Game {
     
     //This is used to start a new round. It resets all arraylists.
     private void initialize(){
-        handList.removeAll(handList);
-        potList.removeAll(potList);
         winList.removeAll(winList);
         deadList.removeAll(deadList);
-        mainDeck.cardNumReset();
+        
+        //removes all the handCards from a player
+        for(int n=0; n<players.size();n++){
+            players.get(n).handCards.removeAll(players.get(n).handCards);
+        }
+        mainDeck.resetCardNum();
+        GroupOfCards.shuffle();
     }
     
-    //This checks if the player is out at the end of the round. If he is, then it unregisters them
-    public void declareDead(){
+    //This checks whether each player won or lost
+    private void sortPlayers(){
+        
+        //loop to iterate through every player
+        for(int n=0; n<players.size();n++){
+            
+            //This is for if the player already busted.
+            if(players.get(n).getHandInt()==0){
+                players.get(n).setBet(0);
+                continue;
+            }
+            
+            /*
+            *Since you can have more than 21 as a value (because it sends the ACE as 11
+            *despite it acting as a 1) this if statement checks the ones that are above 21
+            */
+            if(players.get(n).getHandInt()>21){
+                int winner = Math.max(players.get(n).getHandInt()-31,Dealer.getDealerHandVal()-21);
+                
+                //If the player tied then it refunds the bet
+                if(players.get(n).getHandInt()-31==Dealer.getDealerHandVal()-21){
+                    players.get(n).addFunds(players.get(n).getBet());
+                    players.get(n).setBet(0);
+                }
+                
+                //If the player won, then it pays out 2 times the value
+                else if(winner==players.get(n).getHandInt()-31){
+                    players.get(n).addFunds(2*players.get(n).getBet());
+                    players.get(n).setBet(0);
+                    winList.add(players.get(n).getName());
+                }
+                
+                //This groups any errors together with them losing
+                else{
+                    players.get(n).setBet(0);
+                }
+            }
+            
+            //This is for if the player doesn't have an ACE
+            else{
+                int winner = Math.max(players.get(n).getHandInt()-21,Dealer.getDealerHandVal()-21);
+                
+                //If the player tied then it refunds the bet
+                if(players.get(n).getHandInt()-21==Dealer.getDealerHandVal()-21){
+                    players.get(n).addFunds(players.get(n).getBet());
+                    players.get(n).setBet(0);
+                }
+                
+                //If the player won, then it pays out 2 times the value
+                else if(winner==players.get(n).getHandInt()-21){
+                    players.get(n).addFunds(2*players.get(n).getBet());
+                    players.get(n).setBet(0);
+                    winList.add(players.get(n).getName());
+                }
+                
+                //This groups any errors together with them losing
+                else{
+                    players.get(n).setBet(0);
+                }
+            }
+        }
+    }
+    
+//This checks if the player is out at the end of the round. If he is, then it unregisters them
+    private void declareDead(){
         
         //Going through every player and checks whether or not they have no money
         //If they don't have money, their name is added to the deadList and they get unregistered
         for (int n=0; n<(players.size());n++){
-            if(players.get(n).getBankInt()<-1){
+            if(players.get(n).getBankInt()<1){
                 deadList.add(players.get(n).getName());
                 players.remove(n);
             }
         }
-        //Declares that no-one is eliminated, or the people that are eliminated
-        if (deadList.isEmpty()){
-            System.out.println("No-one got eliminated.");
+        if(deadList.isEmpty()){
         }
         else{
+            //Declares the people that are eliminated
             System.out.println("The following people were eliminated:");
             for(int n=0; n<deadList.size(); n++){
                 System.out.println(deadList.get(n));
             }
         }
+    }
+    
+    //Sees if the player wants to keep going
+    private boolean keepPlaying(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("\n\nPress 0 to continue");
+        int contGame = input.nextInt();
+        return contGame==0;
     }
     
     @Override
@@ -157,8 +223,6 @@ public class BlackJack extends Game {
                 System.out.println(winList.get(n));
             }
         }
-            
-        
     }
     
     
@@ -175,36 +239,25 @@ public class BlackJack extends Game {
         
         //Starts the game
         while (startGame){
-            
+            //Initialize resets the game
             initialize();
-            
-            GroupOfCards.shuffle();
-            
+            //this initialize sets up the dealer
+            dealer.initialize();
             
             //This goes through every player's turn to place a bet and then deals the dealer's hand
             for (int n=0; n<(players.size());n++){
-                while(true){
-                    players.get(n).bet();
-                    break;
-                }
-                //Dealer gets dealt and shows his hand here
+                players.get(n).bet();
             }
             
             //This goes through every player's turn
             for (int n=0; n<(players.size());n++){
-                while(true){
-                    players.get(n).play(n);
-                    break;
-                }
-                //Dealer gets dealt and shows his hand here
+                players.get(n).play(n);
             }
-            
             dealer.play(1);
-            
+            sortPlayers();
             declareWinner();
             declareDead();
-            startGame=false;
-            
+            startGame=keepPlaying();
         }
         
         System.out.println("Thanks for playing.");
